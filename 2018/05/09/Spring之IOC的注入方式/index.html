@@ -117,7 +117,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring之IOC的注入方式">
 <meta property="og:url" content="http://yoursite.com/2018/05/09/Spring之IOC的注入方式/index.html">
-<meta property="og:site_name" content="luoliangDSGA&#39;s blog">
+<meta property="og:site_name" content="meua&#39;s blog">
 <meta property="og:description" content="Spring之IOC的注入方式 在java中，要使用一个对象，必须先创建一个实例，但是有了IOC之后，对象的创建与销毁都交给了IOC容器，不用我们手动创建，而是直接从IOC容器中获取，达到了解耦的效果。IOC是一种思想，在Spring中，实现IOC的方式是DI（依赖注入），本文会介绍Spring依赖注入的几种方式。  Spring的依赖注入对象，在Spring中叫做bean，即使是最简单的应用，也">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-09T07:27:57.702Z">
@@ -159,7 +159,7 @@
 
 
 
-  <title>Spring之IOC的注入方式 | luoliangDSGA's blog</title>
+  <title>Spring之IOC的注入方式 | meua's blog</title>
   
 
 
@@ -189,7 +189,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">luoliangDSGA's blog</span>
+        <span class="site-title">meua's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -323,13 +323,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/Spring之IOC的注入方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luoliangDSGA">
+      <meta itemprop="name" content="meua">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="luoliangDSGA's blog">
+      <meta itemprop="name" content="meua's blog">
     </span>
 
     
@@ -463,7 +463,7 @@
 </ol>
 <p>Author类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Author</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String url;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUrl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> url;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUrl</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.url = url;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Author&#123;"</span> +</span><br><span class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", age="</span> + age +</span><br><span class="line">                <span class="string">", url='"</span> + url + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ol start="2">
-<li>xml配置<br>setter注入是通过在bean下面配置property元素来完成的，在resource下面新建application-setter.xml<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--setter注入--&gt;</span><br><span class="line">    &lt;bean id=<span class="string">"blog"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.spring.ioc.entity.Blog"</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">"name"</span> value=<span class="string">"spring-ioc"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"content"</span> value=<span class="string">"spring"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"date"</span> value=<span class="string">"1520232449944"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"author"</span> ref=<span class="string">"author"</span>/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=<span class="string">"author"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.spring.ioc.entity.Author"</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">"name"</span> value=<span class="string">"luoliang"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"age"</span> value=<span class="string">"18"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"url"</span> value=<span class="string">"https://luoliangdsga.github.io"</span>/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<li>xml配置<br>setter注入是通过在bean下面配置property元素来完成的，在resource下面新建application-setter.xml<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--setter注入--&gt;</span><br><span class="line">    &lt;bean id=<span class="string">"blog"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.spring.ioc.entity.Blog"</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">"name"</span> value=<span class="string">"spring-ioc"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"content"</span> value=<span class="string">"spring"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"date"</span> value=<span class="string">"1520232449944"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"author"</span> ref=<span class="string">"author"</span>/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=<span class="string">"author"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.spring.ioc.entity.Author"</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">"name"</span> value=<span class="string">"luoliang"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"age"</span> value=<span class="string">"18"</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">"url"</span> value=<span class="string">"https://meua.github.io"</span>/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>配置很简单，通过制定property元素的name和value属性，设置变量名对应的值，其中author属性引用的另一个bean，所以使用了ref属性。</p>
@@ -471,10 +471,10 @@
 <li>验证<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String APPLICATION = <span class="string">"classpath:application-*.xml"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//加载xml配置文件</span></span><br><span class="line">        ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(APPLICATION);</span><br><span class="line">        setterInject(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setterInject</span><span class="params">(ApplicationContext context)</span> </span>&#123;</span><br><span class="line">        Blog blog = (Blog) context.getBean(<span class="string">"blog"</span>);</span><br><span class="line">        System.out.println(blog.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>结果如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Blog&#123;name=<span class="string">'spring-ioc'</span>, content=<span class="string">'spring'</span>, date=<span class="number">1520232449944</span>, author=Author&#123;name=<span class="string">'luoliang'</span>, age=<span class="number">18</span>, url=<span class="string">'https://luoliangdsga.github.io'</span>&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结果如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Blog&#123;name=<span class="string">'spring-ioc'</span>, content=<span class="string">'spring'</span>, date=<span class="number">1520232449944</span>, author=Author&#123;name=<span class="string">'luoliang'</span>, age=<span class="number">18</span>, url=<span class="string">'https://meua.github.io'</span>&#125;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>所有我们配置的属性都注入成功。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们可以混合使用构造器注入和Setter注入，最佳实践是强制性依赖关系时使用构造器注入，可选的依赖关系时使用Setter注入，在setter注入中可以使用@Required注解让属性成为必须的依赖项。<br>有很多小伙伴会觉得很奇怪，明明使用注解进行配置依赖更加的简单。不否认，SpringBoot推出之后，Spring已经不再推荐xml配置，而是提倡java配置和注解，但是xml配置是Spring的基础。正是因为传统的Spring应用xml配置太过于复杂，才会出现SpringBoot这门技术来解决这些问题，一个技术的兴起是有各种原因的。SpringBoot虽然解决了配置复杂的问题，但是对于刚入门的人来说，不知道其中的细节，这可能并不是一个好的开始。<br>上面用到的ApplicationContext，它所管理的beans支持构造函数注入和setter注入，在一些依赖已经使用构造器注入之后它还支持setter注入。我们也可以用BeanDefinition的形式配置依赖，它能根据指定的PropertyEditor实现将属性从一种格式转化为另外一种格式。但是，在日常的开发中我们不会直接以编程的方式去创建bean，而是采用上面所讲的xml配置创建bean，或者是通过注解（即@Component，@Service等注解类），或者基于@Configuration类的@Bean方法。本质上这些资源会转换成BeanDefinition的实例并且用于加载整个Spring IoC容器实例。所以，不管我们在传统Spring应用还是SpringBoot中，使用Spring的IOC，它的原理都是不会变的。</p>
-<h4 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h4><p>上面所用到的代码我已放在我的<a href="https://github.com/LuoLiangDSGA/Spring-Learning/tree/master/spring-ioc" target="_blank" rel="noopener">github</a>上，欢迎star，一起学习，共同进步，如有不对之处，欢迎指出。</p>
+<h4 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h4><p>上面所用到的代码我已放在我的<a href="https://github.com/meua/Spring-Learning/tree/master/spring-ioc" target="_blank" rel="noopener">github</a>上，欢迎star，一起学习，共同进步，如有不对之处，欢迎指出。</p>
 
       
     </div>
@@ -597,9 +597,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar1.jpg"
-                alt="luoliangDSGA" />
+                alt="meua" />
             
-              <p class="site-author-name" itemprop="name">luoliangDSGA</p>
+              <p class="site-author-name" itemprop="name">meua</p>
               <p class="site-description motion-element" itemprop="description">Stay hungry, Stay foolish.</p>
           </div>
 
@@ -646,7 +646,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="https://github.com/luoliangDSGA" target="_blank" title="GitHub">
+                    <a href="https://github.com/meua" target="_blank" title="GitHub">
                       
                         <i class="fa fa-fw fa-github"></i>GitHub</a>
                   </span>
@@ -711,7 +711,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">luoliangDSGA</span>
+  <span class="author" itemprop="copyrightHolder">meua</span>
 
   
 </div>

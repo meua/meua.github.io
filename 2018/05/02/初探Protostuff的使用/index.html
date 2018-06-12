@@ -117,7 +117,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="初探Protostuff的使用">
 <meta property="og:url" content="http://yoursite.com/2018/05/02/初探Protostuff的使用/index.html">
-<meta property="og:site_name" content="luoliangDSGA&#39;s blog">
+<meta property="og:site_name" content="meua&#39;s blog">
 <meta property="og:description" content="初探Protostuff的使用 最近在学习RPC，看到了一个叫做Protostuff的库，是基于谷歌Protocal Buffer的序列化库，之前了解过Protocol Buffer，对学习了一些资料后，写了个demo，记录下来。  什么是Protocol Buffer？Protocol Buffer是谷歌出品的一种数据交换格式，独立于语言和平台，类似于json。Google提供了多种语言的实现：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-02T14:54:03.108Z">
@@ -159,7 +159,7 @@
 
 
 
-  <title>初探Protostuff的使用 | luoliangDSGA's blog</title>
+  <title>初探Protostuff的使用 | meua's blog</title>
   
 
 
@@ -189,7 +189,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">luoliangDSGA's blog</span>
+        <span class="site-title">meua's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -323,13 +323,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/初探Protostuff的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luoliangDSGA">
+      <meta itemprop="name" content="meua">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="luoliangDSGA's blog">
+      <meta itemprop="name" content="meua's blog">
     </span>
 
     
@@ -442,7 +442,7 @@
 <p>接下来编写Protostuff序列化工具类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProtostuffUtils</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 避免每次序列化都重新申请Buffer空间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 缓存Schema</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Class&lt;?&gt;, Schema&lt;?&gt;&gt; schemaCache = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 序列化方法，把指定对象序列化成字节数组</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="keyword">byte</span>[] serialize(T obj) &#123;</span><br><span class="line">        Class&lt;T&gt; clazz = (Class&lt;T&gt;) obj.getClass();</span><br><span class="line">        Schema&lt;T&gt; schema = getSchema(clazz);</span><br><span class="line">        <span class="keyword">byte</span>[] data;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            data = ProtostuffIOUtil.toByteArray(obj, schema, buffer);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            buffer.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 反序列化方法，将字节数组反序列化成指定Class类型</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> data</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> clazz</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">deserialize</span><span class="params">(<span class="keyword">byte</span>[] data, Class&lt;T&gt; clazz)</span> </span>&#123;</span><br><span class="line">        Schema&lt;T&gt; schema = getSchema(clazz);</span><br><span class="line">        T obj = schema.newMessage();</span><br><span class="line">        ProtostuffIOUtil.mergeFrom(data, obj, schema);</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Schema&lt;T&gt; <span class="title">getSchema</span><span class="params">(Class&lt;T&gt; clazz)</span> </span>&#123;</span><br><span class="line">        Schema&lt;T&gt; schema = (Schema&lt;T&gt;) schemaCache.get(clazz);</span><br><span class="line">        <span class="keyword">if</span> (Objects.isNull(schema)) &#123;</span><br><span class="line">            <span class="comment">//这个schema通过RuntimeSchema进行懒创建并缓存</span></span><br><span class="line">            <span class="comment">//所以可以一直调用RuntimeSchema.getSchema(),这个方法是线程安全的</span></span><br><span class="line">            schema = RuntimeSchema.getSchema(clazz);</span><br><span class="line">            <span class="keyword">if</span> (Objects.nonNull(schema)) &#123;</span><br><span class="line">                schemaCache.put(clazz, schema);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> schema;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>验证序列化功能<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">implements</span> <span class="title">CommandLineRunner</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String... strings)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个user对象</span></span><br><span class="line">        User user = User.builder().id(<span class="string">"1"</span>).age(<span class="number">20</span>).name(<span class="string">"张三"</span>).desc(<span class="string">"programmer"</span>).build();</span><br><span class="line">        <span class="comment">//创建一个Group对象</span></span><br><span class="line">        Group group = Group.builder().id(<span class="string">"1"</span>).name(<span class="string">"分组1"</span>).user(user).build();</span><br><span class="line">        <span class="comment">//使用ProtostuffUtils序列化</span></span><br><span class="line">        <span class="keyword">byte</span>[] data = ProtostuffUtils.serialize(group);</span><br><span class="line">        System.out.println(<span class="string">"序列化后："</span> + Arrays.toString(data));</span><br><span class="line">        Group result = ProtostuffUtils.deserialize(data, Group.class);</span><br><span class="line">        System.out.println(<span class="string">"反序列化后："</span> + result.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>可以看到控制台打印出如下数据，说明序列化和反序列化成功<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">序列化后：[<span class="number">10</span>, <span class="number">1</span>, <span class="number">49</span>, <span class="number">18</span>, <span class="number">7</span>, -<span class="number">27</span>, -<span class="number">120</span>, -<span class="number">122</span>, -<span class="number">25</span>, -<span class="number">69</span>, -<span class="number">124</span>, <span class="number">49</span>, <span class="number">27</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">49</span>, <span class="number">18</span>, <span class="number">6</span>, -<span class="number">27</span>, -<span class="number">68</span>, -<span class="number">96</span>, -<span class="number">28</span>, -<span class="number">72</span>, -<span class="number">119</span>, <span class="number">24</span>, <span class="number">20</span>, <span class="number">34</span>, <span class="number">10</span>, <span class="number">112</span>, <span class="number">114</span>, <span class="number">111</span>, <span class="number">103</span>, <span class="number">114</span>, <span class="number">97</span>, <span class="number">109</span>, <span class="number">109</span>, <span class="number">101</span>, <span class="number">114</span>, <span class="number">28</span>]</span><br><span class="line">反序列化后：Group(id=<span class="number">1</span>, name=分组<span class="number">1</span>, user=User(id=<span class="number">1</span>, name=张三, age=<span class="number">20</span>, desc=programmer))</span><br></pre></td></tr></table></figure></p>
-<p>最后，代码在这里<a href="https://github.com/LuoLiangDSGA/SpringBoot-Learning/tree/master/boot-protostuff" target="_blank" rel="noopener">地址</a>，欢迎star。</p>
+<p>最后，代码在这里<a href="https://github.com/meua/SpringBoot-Learning/tree/master/boot-protostuff" target="_blank" rel="noopener">地址</a>，欢迎star。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="https://github.com/protostuff/protostuff" target="_blank" rel="noopener">https://github.com/protostuff/protostuff</a></li>
 </ul>
@@ -568,9 +568,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar1.jpg"
-                alt="luoliangDSGA" />
+                alt="meua" />
             
-              <p class="site-author-name" itemprop="name">luoliangDSGA</p>
+              <p class="site-author-name" itemprop="name">meua</p>
               <p class="site-description motion-element" itemprop="description">Stay hungry, Stay foolish.</p>
           </div>
 
@@ -617,7 +617,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="https://github.com/luoliangDSGA" target="_blank" title="GitHub">
+                    <a href="https://github.com/meua" target="_blank" title="GitHub">
                       
                         <i class="fa fa-fw fa-github"></i>GitHub</a>
                   </span>
@@ -682,7 +682,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">luoliangDSGA</span>
+  <span class="author" itemprop="copyrightHolder">meua</span>
 
   
 </div>

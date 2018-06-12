@@ -117,7 +117,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot中使用Redis的实践">
 <meta property="og:url" content="http://yoursite.com/2018/05/22/SpringBoot中使用Redis的实践/index.html">
-<meta property="og:site_name" content="luoliangDSGA&#39;s blog">
+<meta property="og:site_name" content="meua&#39;s blog">
 <meta property="og:description" content="SpringBoot中使用Redis的实践 Redis是一个高性能的内存数据库，在日常开发中运用非常的广泛，主要用作缓存。Redis提供了非常丰富的数据结构，有String，List，Set，ZSet，Hash，Redis为这些数据结构提供了丰富的原子性操作。弥补了其他NoSQL如Memcached的不足。在SpringBoot中，由于Boot提供了强大的AutoConfiguration，集成R">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-22T03:11:34.818Z">
@@ -159,7 +159,7 @@
 
 
 
-  <title>SpringBoot中使用Redis的实践 | luoliangDSGA's blog</title>
+  <title>SpringBoot中使用Redis的实践 | meua's blog</title>
   
 
 
@@ -189,7 +189,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">luoliangDSGA's blog</span>
+        <span class="site-title">meua's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -323,13 +323,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/SpringBoot中使用Redis的实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luoliangDSGA">
+      <meta itemprop="name" content="meua">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="luoliangDSGA's blog">
+      <meta itemprop="name" content="meua's blog">
     </span>
 
     
@@ -434,7 +434,7 @@
         <h2 id="SpringBoot中使用Redis的实践"><a href="#SpringBoot中使用Redis的实践" class="headerlink" title="SpringBoot中使用Redis的实践"></a>SpringBoot中使用Redis的实践</h2><blockquote>
 <p>Redis是一个高性能的内存数据库，在日常开发中运用非常的广泛，主要用作缓存。Redis提供了非常丰富的数据结构，有String，List，Set，ZSet，Hash，<br>Redis为这些数据结构提供了丰富的原子性操作。弥补了其他NoSQL如Memcached的不足。在SpringBoot中，由于Boot提供了强大的AutoConfiguration，<br>集成Redis变得非常简单。本文将介绍Redis在SpringBoot中的应用，包括手动使用RedisTemplate进行操作，和使用注解（@Cacheable等）把业务数据缓存到Redis中。</p>
 </blockquote>
-<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>环境：JDK1.8，Maven3+，Redis3<br>需要预先安装好Redis，也可以使用Docker快速部署一个Redis，可以参考我之前的<a href="https://luoliangdsga.github.io/2018/04/26/使用Docker部署Redis/" target="_blank" rel="noopener">文章</a><br><a id="more"></a></p>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>环境：JDK1.8，Maven3+，Redis3<br>需要预先安装好Redis，也可以使用Docker快速部署一个Redis，可以参考我之前的<a href="https://meua.github.io/2018/04/26/使用Docker部署Redis/" target="_blank" rel="noopener">文章</a><br><a id="more"></a></p>
 <p>新建一个SpringBoot项目，引入需要用到的相关maven依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!--SpringBoot的Redis支持--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!--SpringBoot缓存支持--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-cache<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>在yaml文件中配置redis连接：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  redis:</span></span><br><span class="line">    <span class="comment">#Redis服务器地址，默认localhost</span></span><br><span class="line"><span class="attr">    host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="comment">#Redis服务器端口，默认6379</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">6379</span></span><br><span class="line"><span class="attr">    pool:</span></span><br><span class="line">      <span class="comment">#连接池最大连接数</span></span><br><span class="line"><span class="attr">      max-active:</span> <span class="number">8</span></span><br><span class="line">      <span class="comment">#最大阻塞等待时间，-1表示没有限制</span></span><br><span class="line"><span class="attr">      max-wait:</span> <span class="bullet">-1</span></span><br><span class="line">      <span class="comment">#最大空闲连接</span></span><br><span class="line"><span class="attr">      max-idle:</span> <span class="number">8</span></span><br><span class="line">      <span class="comment">#最小空闲连接</span></span><br><span class="line"><span class="attr">      min-idle:</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">#连接超时时间</span></span><br><span class="line"><span class="attr">    timeout:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="使用RedisTemplate操作Redis"><a href="#使用RedisTemplate操作Redis" class="headerlink" title="使用RedisTemplate操作Redis"></a>使用RedisTemplate操作Redis</h3><p>spring-data-redis提供了一个RedisTemplate类，这个类封装了对Redis基本数据结构的常用操作，它的子类StringRedisTemplate提供了对字符串的常用<br>操作，接下来将使用StringRedisTemplate来操作Redis中的String和List类型。</p>
@@ -472,7 +472,7 @@
 <p>再调用一次get方法，此时将不会进入方法中，直接从缓存中拿到数据并返回，结果如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span>-<span class="number">05</span>-<span class="number">22</span> <span class="number">10</span>:<span class="number">57</span>:<span class="number">57.557</span>  INFO <span class="number">42313</span> --- [           main] o.b.redis.service.RedisCacheServiceTest  : User(id=<span class="number">1111111</span>, name=spring, age=<span class="number">18</span>)</span><br></pre></td></tr></table></figure></p>
 <p>再调用save方法，会把缓存中ID为1111111的User年龄更新为20，调用delete方法会删除缓存，和预期的结果一致，这里就不贴结果了，感兴趣的同学可以自行验证。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>至此，整篇文章就结束了，文章包含了RedisTemplate的使用，以及Spring提供的@Cacheable等注解的使用，都是日常开发中常常用到的东西。</p>
-<p>最后，附上github源码，欢迎star，一起交流。<a href="https://github.com/LuoLiangDSGA/Spring-Learning/tree/master/boot-redis" target="_blank" rel="noopener">boot-redis</a></p>
+<p>最后，附上github源码，欢迎star，一起交流。<a href="https://github.com/meua/Spring-Learning/tree/master/boot-redis" target="_blank" rel="noopener">boot-redis</a></p>
 
       
     </div>
@@ -595,9 +595,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar1.jpg"
-                alt="luoliangDSGA" />
+                alt="meua" />
             
-              <p class="site-author-name" itemprop="name">luoliangDSGA</p>
+              <p class="site-author-name" itemprop="name">meua</p>
               <p class="site-description motion-element" itemprop="description">Stay hungry, Stay foolish.</p>
           </div>
 
@@ -644,7 +644,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="https://github.com/luoliangDSGA" target="_blank" title="GitHub">
+                    <a href="https://github.com/meua" target="_blank" title="GitHub">
                       
                         <i class="fa fa-fw fa-github"></i>GitHub</a>
                   </span>
@@ -709,7 +709,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">luoliangDSGA</span>
+  <span class="author" itemprop="copyrightHolder">meua</span>
 
   
 </div>

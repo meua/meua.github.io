@@ -117,7 +117,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Docker容器化SpringBoot+Dubbo应用的实践">
 <meta property="og:url" content="http://yoursite.com/2018/06/10/使用Docker容器化SpringBoot-Dubbo应用的实践/index.html">
-<meta property="og:site_name" content="luoliangDSGA&#39;s blog">
+<meta property="og:site_name" content="meua&#39;s blog">
 <meta property="og:description" content="使用Docker容器化SpringBoot+Dubbo应用的实践Docker在日常开发中越来越火，工作中后端很多项目都需要使用Docker进行容器化，SpringBoot+Docker被称为“原生云应用”，SpringBoot应用和Docker结合非常容易。但是对于Dubbo和Docker结合就不是那么的顺利，由于Dubbo官方停止维护许久，同时Dubbo官方在不久前才开始积极支持Spri">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1fs6id7au4oj31kw0gm11n.jpg">
@@ -164,7 +164,7 @@
 
 
 
-  <title>使用Docker容器化SpringBoot+Dubbo应用的实践 | luoliangDSGA's blog</title>
+  <title>使用Docker容器化SpringBoot+Dubbo应用的实践 | meua's blog</title>
   
 
 
@@ -194,7 +194,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">luoliangDSGA's blog</span>
+        <span class="site-title">meua's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -328,13 +328,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/10/使用Docker容器化SpringBoot-Dubbo应用的实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luoliangDSGA">
+      <meta itemprop="name" content="meua">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="luoliangDSGA's blog">
+      <meta itemprop="name" content="meua's blog">
     </span>
 
     
@@ -436,7 +436,7 @@
       
 
       
-        <h2 id="使用Docker容器化SpringBoot-Dubbo应用的实践"><a href="#使用Docker容器化SpringBoot-Dubbo应用的实践" class="headerlink" title="使用Docker容器化SpringBoot+Dubbo应用的实践"></a>使用Docker容器化SpringBoot+Dubbo应用的实践</h2><p><strong>Docker在日常开发中越来越火，工作中后端很多项目都需要使用Docker进行容器化，SpringBoot+Docker被称为“原生云应用”，SpringBoot应用和Docker结合非常容易。但是对于Dubbo和Docker结合就不是那么的顺利，由于Dubbo官方停止维护许久，同时Dubbo官方在不久前才开始积极支持SpringBoot。我在踩了很多坑之后，用本篇博客记录使用Docker容器化Dubbo应用的方法，接我的上一篇SpringBoot+Dubbo的<a href="https://luoliangdsga.github.io/2018/04/18/SpringBoot整合Dubbo2-5-10/" target="_blank" rel="noopener">博客</a>。</strong></p>
+        <h2 id="使用Docker容器化SpringBoot-Dubbo应用的实践"><a href="#使用Docker容器化SpringBoot-Dubbo应用的实践" class="headerlink" title="使用Docker容器化SpringBoot+Dubbo应用的实践"></a>使用Docker容器化SpringBoot+Dubbo应用的实践</h2><p><strong>Docker在日常开发中越来越火，工作中后端很多项目都需要使用Docker进行容器化，SpringBoot+Docker被称为“原生云应用”，SpringBoot应用和Docker结合非常容易。但是对于Dubbo和Docker结合就不是那么的顺利，由于Dubbo官方停止维护许久，同时Dubbo官方在不久前才开始积极支持SpringBoot。我在踩了很多坑之后，用本篇博客记录使用Docker容器化Dubbo应用的方法，接我的上一篇SpringBoot+Dubbo的<a href="https://meua.github.io/2018/04/18/SpringBoot整合Dubbo2-5-10/" target="_blank" rel="noopener">博客</a>。</strong></p>
 <h3 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h3><ul>
 <li>Dubbo Provider在Docker container中进行服务注册，在zookeeper中的注册IP是容器IP，这样外部的Dubbo Consumer是无法调用的。</li>
 </ul>
@@ -498,7 +498,7 @@
 <blockquote>
 <p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fs6a59oetkj31kw04tju9.jpg" alt=""></p>
 </blockquote>
-<h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3><p>本文到这里就结束了，我在上一篇博客的源码中进行了一些改动，文中用到的Dockfile都在其中，源码在<a href="https://github.com/LuoLiangDSGA/Spring-Learning/tree/master/boot-dubbo" target="_blank" rel="noopener">这里</a>，文章是个人学习的实践总结，会有不完善的地方，若有更好的做法，欢迎大家指出，谢谢！</p>
+<h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3><p>本文到这里就结束了，我在上一篇博客的源码中进行了一些改动，文中用到的Dockfile都在其中，源码在<a href="https://github.com/meua/Spring-Learning/tree/master/boot-dubbo" target="_blank" rel="noopener">这里</a>，文章是个人学习的实践总结，会有不完善的地方，若有更好的做法，欢迎大家指出，谢谢！</p>
 
       
     </div>
@@ -619,9 +619,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar1.jpg"
-                alt="luoliangDSGA" />
+                alt="meua" />
             
-              <p class="site-author-name" itemprop="name">luoliangDSGA</p>
+              <p class="site-author-name" itemprop="name">meua</p>
               <p class="site-description motion-element" itemprop="description">Stay hungry, Stay foolish.</p>
           </div>
 
@@ -668,7 +668,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="https://github.com/luoliangDSGA" target="_blank" title="GitHub">
+                    <a href="https://github.com/meua" target="_blank" title="GitHub">
                       
                         <i class="fa fa-fw fa-github"></i>GitHub</a>
                   </span>
@@ -733,7 +733,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">luoliangDSGA</span>
+  <span class="author" itemprop="copyrightHolder">meua</span>
 
   
 </div>
